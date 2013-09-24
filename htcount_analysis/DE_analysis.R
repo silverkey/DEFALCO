@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-# LIMMA ANALYSIS
+# LIMMA ANALYSIS (TO CHECK!!!)
 #------------------------------------------------------------------------------
 library(edgeR)
 samples = read.table(file='targets.txt',sep='\t',quote='',comment.char='',head=T,stringsAsFactors=F)
@@ -49,8 +49,8 @@ rownames(data) = data$geneid
 data = data[,samples$name]
 tot = colSums(data)
 lib.size=tot[samples$name]
-data = data[grep('ENS',data$geneid),]
-notass = data[-grep('ENS',data$geneid),]
+data = data[grep('N',rownames(data)),]
+notass = data[-grep('N',rownames(data)),]
 
 comparison = c('FC','FV')
 colData = samples[samples$condition %in% comparison,]
@@ -79,9 +79,10 @@ library(DESeq2)
 samples = read.table(file='targets.txt',sep='\t',quote='',comment.char='',head=T,stringsAsFactors=F)
 rownames(samples) = samples$name
 data = read.table('COUNTS.txt',header=T,quote='')
+rownames(data) = data$geneid
 colnames(data) = gsub('.','-',colnames(data),fixed=T)
-counts = data[grep('ENS',data$geneid),]
-notass = data[-grep('ENS',data$geneid),]
+counts = data[grep('N',rownames(data)),]
+notass = data[-grep('N',rownames(data)),]
 rownames(counts) = counts$geneid
 counts = counts[,samples$name]
 
@@ -113,6 +114,12 @@ rownames(samples) = samples$name
 data = read.table('COUNTS.txt',header=T,quote='')
 colnames(data) = gsub('.','-',colnames(data),fixed=T)
 rownames(data) = data$geneid
+library(edgeR)
+samples = read.table(file='targets.txt',sep='\t',quote='',comment.char='',head=T,stringsAsFactors=F)
+rownames(samples) = samples$name
+data = read.table('COUNTS.txt',header=T,quote='')
+colnames(data) = gsub('.','-',colnames(data),fixed=T)
+rownames(data) = data$geneid
 data = data[,samples$name]
 tot = colSums(data)
 lib.size=tot[samples$name]
@@ -138,10 +145,10 @@ library(DESeq2)
 samples = read.table(file='targets.txt',sep='\t',quote='',comment.char='',head=T,stringsAsFactors=F)
 rownames(samples) = samples$name
 data = read.table('COUNTS.txt',header=T,quote='')
+rownames(data) = data$geneid
 colnames(data) = gsub('.','-',colnames(data),fixed=T)
-counts = data[grep('ENS',data$geneid),]
-notass = data[-grep('ENS',data$geneid),]
-rownames(counts) = counts$geneid
+counts = data[grep('N',rownames(data)),]
+notass = data[-grep('N',rownames(data)),]
 counts = counts[,samples$name]
 colData = samples
 countData = counts[,colData$name]
